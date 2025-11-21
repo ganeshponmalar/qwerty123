@@ -7,6 +7,7 @@ import asyncHandler from 'express-async-handler';
 // @access Private
 const getAllNotes = asyncHandler(async (req, res) => {
     const notes = await Note.find().lean();
+    console.log(notes)
 
     if (!notes?.length) {
         return res.status(400).json({ message: 'No notes found' });
