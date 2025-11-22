@@ -16,7 +16,7 @@ const getAllNotes = asyncHandler(async (req, res) => {
     const notesWithUser = await Promise.all(    //for each notes fetch notes with username
         notes.map(async (note) => {
             const user = await User.findById(note.user).lean().exec();
-            console.log(user,'from the user')
+            console.log(user, 'from the user')
             return { ...note, username: user?.username || 'Unknown' };
         })
     );
@@ -25,27 +25,28 @@ const getAllNotes = asyncHandler(async (req, res) => {
 });
 
 
- 
+
 // @desc Create new note
 // @route POST /notes
 // @access Private
 const createNewNote = asyncHandler(async (req, res) => {
     const { user, title, text } = req.body;
+    console.log(req.body)
 
     if (!user || !title || !text) {
         return res.status(400).json({ message: 'All fields are required' });
     }
- 
+
     const duplicate = await Note.findOne({ title }).lean().exec();
     if (duplicate) {
         return res.status(409).json({ message: 'Duplicate note title' });
-    } 
-  
+    }
+
     const note = await Note.create({ user, title, text });
 
     if (note) {
         return res.status(201).json({ message: 'New note created' });
-    } else {    
+    } else {
         return res.status(400).json({ message: 'Invalid note data received' });
     }
 });
@@ -67,7 +68,7 @@ const updateNote = asyncHandler(async (req, res) => {
     }
 
     const duplicate = await Note.findOne({ title }).lean().exec();//help in sending plain javascript object to avoid mongoose document
-    
+
     if (duplicate && duplicate._id.toString() !== noteId) {
         return res.status(409).json({ message: 'Duplicate note title' });
     }
