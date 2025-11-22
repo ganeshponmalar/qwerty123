@@ -8,7 +8,7 @@ import asyncHandler from 'express-async-handler'
 // @route   POST /auth
 export const login = asyncHandler(async (req, res) => {
     const { username, password } = req.body
-    console.log(username)
+    
     if (!username || !password) {
         return res.status(400).json({ message: 'All fields are required' })
     }
