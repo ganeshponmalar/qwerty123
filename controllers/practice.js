@@ -11,5 +11,6 @@ console.log(str,'from json object to string')
 console.log(0.2 + 0.3 === 0.3)
 
 console.log(1.3 == 123)
+console.log(4.00 + 2.0 === 2.0)
 
 
