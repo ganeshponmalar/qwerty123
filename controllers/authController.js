@@ -67,6 +67,8 @@ export const refresh = asyncHandler(async (req, res) => {
         if (err) return res.status(403).json({ message: 'Forbidden' })    //with request allowing the server to issue a new access token
                                                                             // with out allowing the user login in again
         const foundUser = await User.findOne({ username: decoded.username }).exec()
+        console.log(foundUser,'finding the user')
+        
         if (!foundUser) return res.status(401).json({ message: 'Unauthorized' })
 
         const accessToken = jwt.sign(
